@@ -43,7 +43,13 @@ namessm2 <- c("Activity", "Y", "Subject", namessm2)
 
 required_data <- merged_data[, colnames(merged_data) %in% namessm2]
 
+
+
 melted_data <- melt(required_data, id=c("Activity", "Y", "Subject"), measure.vars = namessm2)
 
-colnames(summary_data) <- c("Activity", "Subject", "Variable", "Average")
 summary_data <- melted_data %>% group_by(Activity, Subject, variable) %>% summarize(mean(value))
+
+colnames(summary_data) <- c("Activity", "Subject", "Variable", "Average")
+
+write.table(summary_data, "R/Cleaning/Summary by Activity and Subject.txt", row.names=FALSE)
+write.table(required_data, "R/Cleaning/Standard Deviation and Mean data.txt", row.names=FALSE)
